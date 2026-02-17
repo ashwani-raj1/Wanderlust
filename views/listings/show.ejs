@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/show.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/rating.css"/>
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include("../includes/navbar.ejs") %>
+    <br />
+    <br />
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h2 class="col-6 offset-3">Here are full details for this property</h2>
+        <br />
+      </div>
+      <div class="card col-4 offset-4">
+        <% if (listing.image && listing.image.url) { %>
+      <img src="<%= listing.image.url %>" class="card-img-top" />
+    <% } else { %>
+      <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" class="card-img-top" />
+    <% } %>
+
+        <div class="card-body">
+          <p class="card-text"><%= listing.title %></p>
+          <b>Owned by: <%= listing.owner.username %></b>
+          <br/>
+          <%= listing.description %><br />
+          &#8377;<%= listing.price.toLocaleString("en-IN") %><br />
+          <%= listing.location %><br />
+          <%= listing.country %>
+        </div>
+      </div>
+      <br />
+
+      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+      <div
+        class="d-flex justify-content-center align-items-center gap-3 mt-4 mb-3"
+      >
+        <form
+          method="POST"
+          action="/listings/<%= listing._id %>/?_method=DELETE"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+
+        <form method="GET" action="/listings/<%= listing._id %>/edit">
+          <button class="btn btn-dark">Edit</button>
+        </form>
+      </div>
+      <% } %>
+        
+      <div class="col-8 offset-3 mb-3">
+        <% if(currUser) { %>
+        <hr />
+        <h4>Leave a review</h4>
+        <form
+          method="POST"
+          action="/listings/<%= listing._id %>/reviews"
+          novalidate
+          class="needs-validation"
+        >
+
+        <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating</label>
+        <fieldset class="starability-basic">
+        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+        </div>
+
+          <div class="mb-3 mt-3">
+            <label class="form-label" for="comment">Comment</label>
+            <textarea
+              name="review[comment]"
+              id="comment"
+              cols="20"
+              rows="5"
+              class="form-control"
+              required
+            ></textarea>
+            <div class="invalid-feedback">
+                Please add some comments for review
+            </div>
+          </div>
+          <button class="btn btn-outline-dark">Submit</button>
+        </form>
+        <% } %>
+        <hr />
+        <p><b>All Reviews</b></p>
+        <div class="row col-6">
+        <% for(review of listing.reviews) { %> 
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@<%= review.author.username %></h5>
+                <p class="starability-result card-text" data-rating="<%= review.rating %>">Rated: <%= review.rating %> stars</p>
+                <p class="card-text"><%= review.comment %></p>
+                <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button>Delete</button>
+                </form>
+            </div>
+            </div>
+        <% } %>
+        </div>
+      </div>
+    </div>
+    <%- include("../includes/footer.ejs") %>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

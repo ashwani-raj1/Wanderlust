@@ -1,0 +1,179 @@
+body{
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+  flex: 1;
+}
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links, .f-info-socials, .f-info-brand{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.f-info-socials i{
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.f-info{
+    height: 8rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    text-align: center;
+} 
+
+/* ===== PAGE ===== */
+h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 16px 0 12px;
+}
+
+/* ===== LINK RESET ===== */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== GRID ===== */
+.row {
+  --bs-gutter-x: 24px;
+  row-gap: 32px;
+}
+
+/* ===== CARD ===== */
+.card {
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover like Airbnb */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Remove bootstrap width */
+.card.col {
+  width: 100% !important;
+}
+
+/* ===== IMAGE ===== */
+.card-img-top {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* ===== CARD BODY ===== */
+.card-body {
+  padding: 10px 2px 0;
+}
+
+/* Title */
+.card-body h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+
+  /* Airbnb truncation */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Price */
+.card-body p:nth-child(2) {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+/* Location */
+.card-body p:nth-child(3) {
+  font-size: 13px;
+  font-weight: 400;
+  color: #717171;
+  margin-bottom: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .card-img-top {
+    height: 240px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  h3 {
+    font-size: 20px;
+  }
+
+  .row {
+    row-gap: 28px;
+  }
+
+  .card-img-top {
+    height: 220px;
+  }
+
+  .card-body h5 {
+    font-size: 14.5px;
+  }
+}
+.listing-link{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+
+
+
+

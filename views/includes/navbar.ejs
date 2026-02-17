@@ -1,0 +1,227 @@
+<style>
+
+#navbarNavAltMarkup {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Left section */
+#navbarNavAltMarkup .navbar-nav:first-child {
+  flex: 1;
+}
+
+/* Right section */
+#navbarNavAltMarkup .navbar-nav.ms-auto {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Center search bar */
+.nav-center {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 8px 8px 8px 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  gap: 20px;
+  width: 700px;
+  max-width: 100%;
+}
+
+/* Each input block */
+.search-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-item label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.search-item input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: gray;
+}
+
+/* Divider */
+.divider {
+  width: 1px;
+  height: 30px;
+  background: #ddd;
+}
+
+/* Button */
+.search-btn {
+  background: #ff385c;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background: #e11d48;
+  transform: scale(1.05);
+}
+
+.category-wrapper {
+  border-bottom: 1px solid #eee;
+  background: white;
+  position: sticky;
+  top: 70px;
+  z-index: 100;
+}
+
+.category-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categories {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  text-align: center;
+  cursor: pointer;
+  color: #717171;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.category i {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.category:hover {
+  color: black;
+}
+
+.category.active {
+  color: black;
+  border-bottom: 2px solid black;
+  padding-bottom: 6px;
+}
+
+.category-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.filter-btn {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 6px 14px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter-btn:hover {
+  background: #f7f7f7;
+}
+
+.tax-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.add-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
+
+</style>
+
+
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa fa-compass" aria-hidden="true"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+      <div class="nav-center">
+  <form class="search-bar" action="/listings" method="GET">
+
+    <div class="search-item">
+      <label>Where</label>
+      <input type="text" name="location" placeholder="Search destinations">
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="search-item">
+      <label>When</label>
+      <input type="date" name="date">
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="search-item">
+      <label>Who</label>
+      <input type="number" name="guests" placeholder="Add guests" min="1">
+    </div>
+
+    <button type="submit" class="search-btn">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+  </form>
+</div>
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <% if (!currUser) { %> 
+        <a class="nav-link " href="/signup"><b>signup</b></a>
+        <a class="nav-link" href="/login"><b>login</b></a>
+        <% } %>
+        <% if (currUser) { %> 
+        <a class="nav-link" href="/logout"><b>logout</b></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

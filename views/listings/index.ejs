@@ -1,0 +1,122 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+  .gst {
+    display: none;
+    color: gray;
+    font-style: normal;
+  }
+</style>
+
+<body>
+    <div class="category-wrapper">
+
+  <div class="category-container">
+
+    <!-- Categories -->
+    <div class="categories">
+
+      <div class="category active">
+        <i class="fa-solid fa-tractor"></i>
+        <span>Farms</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-bed"></i>
+        <span>Rooms</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-mountain-sun"></i>
+        <span>Amazing views</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-city"></i>
+        <span>Iconic cities</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-water"></i>
+        <span>Surfing</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-person-swimming"></i>
+        <span>Amazing pools</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span>Beach</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-house"></i>
+        <span>Cabins</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-face-surprise"></i>
+        <span>OMG!</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-water"></i>
+        <span>Lakefront</span>
+      </div>
+
+    </div>
+
+    <!-- Right Side Controls -->
+    <div class="category-actions">
+
+      <button class="filter-btn">
+        <i class="fa-solid fa-sliders"></i> Filters
+      </button>
+
+      <div class="tax-toggle">
+        <input type="checkbox" id="taxSwitch">
+        <label for="taxSwitch">Display total before taxes</label>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <br/>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let list of allListing) { %>
+    <a href="http://localhost:8080/listings/<%= list._id %>" class="listing-link">
+    <div class="card col" style="width: 18rem;">
+        <% if (list.image && list.image.url) { %>
+        <img src="<%= list.image.url %>" class="card-img-top" />
+        <% } else { %>
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85" class="card-img-top" />
+        <% } %>
+        <div class="card-img-overlay"></div>
+        <div class="card-body" >
+        <h5><%= list.title %></h5>
+        <p>&#8377; <%= list.price.toLocaleString("en-IN") %> <i class="gst">+18% GST</i></p>
+        <p><%= list.location %>,<%= list.country %></p>
+        </div>
+    </div>
+    </a>
+    <% } %>
+    </div>
+</body>
+<script>
+  const taxSwitch = document.getElementById("taxSwitch");
+  const gstElements = document.querySelectorAll(".gst");
+
+  taxSwitch.addEventListener("change", function () {
+    gstElements.forEach(function (gst) {
+      if (taxSwitch.checked) {
+        gst.style.display = "inline";
+      } else {
+        gst.style.display = "none";
+      }
+    });
+  });
+</script>
