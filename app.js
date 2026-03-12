@@ -14,6 +14,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+require("./config/passportGoogle");
 
 
 const listingsRouter = require("./routes/listing.js");
@@ -71,10 +72,9 @@ app.get("/",(req,res)=>{
 
 
 app.use(session(sessionOption));
-app.use(flash());
-
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());

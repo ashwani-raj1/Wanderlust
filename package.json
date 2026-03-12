@@ -2,7 +2,6 @@
   "engines": {
     "node": "22.14.0"
   },
-
   "name": "major-project",
   "version": "1.0.0",
   "description": "",
@@ -29,6 +28,8 @@
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.7.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^9.0.1"
   }
