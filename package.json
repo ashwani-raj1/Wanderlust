@@ -27,6 +27,8 @@
     "mongoose": "^9.1.5",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^8.0.2",
+    "otp-generator": "^4.0.1",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",

@@ -186,16 +186,30 @@
       <div class="nav-center">
   <form class="search-bar" action="/listings/search" method="GET">
 
-  <div class="search-item">
-    <label>Where</label>
-    <input type="text" name="q" placeholder="Search destinations">
-  </div>
+    <div class="search-item">
+      <label>Where</label>
+      <input type="text" name="q" placeholder="Search destinations">
+    </div>
 
-  <button type="submit" class="search-btn">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
+    <div class="divider"></div>
 
-</form>
+    <div class="search-item">
+      <label>When</label>
+      <input type="date" name="date">
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="search-item">
+      <label>Who</label>
+      <input type="number" name="guests" placeholder="Add guests" min="1">
+    </div>
+
+    <button type="submit" class="search-btn">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+  </form>
 </div>
 
       <div class="navbar-nav ms-auto">

@@ -1,29 +1,191 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-  <div class="col-6 offset-3">
-    <h1>SignUp on Wanderlust</h1>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:75vh;">
+
+  <div class="card shadow-lg p-4" style="width:450px; border-radius:15px;">
+
+    <h3 class="text-center mb-4">Create your Wanderlust Account</h3>
+
     <form action="/signup" method="POST" class="needs-validation" novalidate>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" id="username" required/>
-            <div class="valid-feedback">Looks good!</div>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-user"></i>
+          </span>
+
+          <input 
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Enter username"
+          value="<%= formData?.username || '' %>"
+          required>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" id="email" required/>
+
+        <div class="invalid-feedback">
+          Please enter username
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">password</label>
-            <input type="password" class="form-control" name="password" id="password" required/>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+
+        <div class="input-group">
+
+          <span class="input-group-text">
+            <i class="fa-solid fa-envelope"></i>
+          </span>
+
+          <input 
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+          value="<%= formData?.email || '' %>"
+          required>
+
+          <button
+          type="button"
+          class="btn btn-outline-primary"
+          onclick="sendOTP()">
+          Send OTP
+          </button>
+
         </div>
-        <button class="btn btn-success mb-3">SignUp</button>
-       <p>
-        Sign up using Google 
-        <a href="/auth/google" style="text-decoration:none;">
-            <i class="fa-brands fa-google" style="color:red; font-size:18px;"></i>
+
+        <div class="invalid-feedback">
+          Please enter valid email
+        </div>
+      </div>
+
+      <!-- OTP -->
+      <div class="mb-3">
+        <label class="form-label">Enter OTP</label>
+
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-shield-halved"></i>
+          </span>
+
+          <input
+          type="text"
+          class="form-control"
+          name="otp"
+          placeholder="Enter OTP"
+          required>
+        </div>
+
+        <div class="invalid-feedback">
+          Please enter OTP
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-lock"></i>
+          </span>
+
+          <input
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Create password"
+          value="<%= formData?.password || '' %>"
+          required>
+        </div>
+
+        <div class="invalid-feedback">
+          Please enter password
+        </div>
+      </div>
+
+      <!-- Signup Button -->
+      <button class="btn btn-success w-100 mb-3">
+        Create Account
+      </button>
+
+      <hr>
+
+      <!-- Google Signup -->
+      <div class="text-center">
+
+        <p class="mb-2">Or sign up with</p>
+
+        <a href="/auth/google" class="btn btn-outline-danger w-100">
+          <i class="fa-brands fa-google"></i>
+          Continue with Google
         </a>
-        </p>
-        <p>Already have an account login here <a href="/login">Login</a></p>
+
+      </div>
+
+      <!-- Login -->
+      <p class="text-center mt-3">
+        Already have an account?
+        <a href="/login">Login</a>
+      </p>
+
     </form>
+
   </div>
+
 </div>
+
+
+<script>
+
+async function sendOTP(){
+
+  const email = document.getElementById("email").value;
+
+  if(!email){
+    alert("Enter email first");
+    return;
+  }
+
+  const res = await fetch("/send-otp",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({email})
+  });
+
+  const data = await res.json();
+
+  alert(data.message);
+
+}
+
+
+// Bootstrap validation
+(() => {
+  'use strict'
+
+  const forms = document.querySelectorAll('.needs-validation')
+
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+
+    }, false)
+  })
+
+})()
+
+</script>
