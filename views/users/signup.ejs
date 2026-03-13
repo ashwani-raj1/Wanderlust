@@ -31,8 +31,10 @@
         </div>
       </div>
 
-      <!-- Email -->
+
+      <!-- Email + Send OTP -->
       <div class="mb-3">
+
         <label class="form-label">Email</label>
 
         <div class="input-group">
@@ -52,6 +54,7 @@
 
           <button
           type="button"
+          id="sendOtpBtn"
           class="btn btn-outline-primary"
           onclick="sendOTP()">
           Send OTP
@@ -62,10 +65,13 @@
         <div class="invalid-feedback">
           Please enter valid email
         </div>
+
       </div>
+
 
       <!-- OTP -->
       <div class="mb-3">
+
         <label class="form-label">Enter OTP</label>
 
         <div class="input-group">
@@ -84,13 +90,17 @@
         <div class="invalid-feedback">
           Please enter OTP
         </div>
+
       </div>
+
 
       <!-- Password -->
       <div class="mb-3">
+
         <label class="form-label">Password</label>
 
         <div class="input-group">
+
           <span class="input-group-text">
             <i class="fa-solid fa-lock"></i>
           </span>
@@ -102,19 +112,24 @@
           placeholder="Create password"
           value="<%= formData?.password || '' %>"
           required>
+
         </div>
 
         <div class="invalid-feedback">
           Please enter password
         </div>
+
       </div>
+
 
       <!-- Signup Button -->
       <button class="btn btn-success w-100 mb-3">
         Create Account
       </button>
 
+
       <hr>
+
 
       <!-- Google Signup -->
       <div class="text-center">
@@ -128,7 +143,7 @@
 
       </div>
 
-      <!-- Login -->
+
       <p class="text-center mt-3">
         Already have an account?
         <a href="/login">Login</a>
@@ -143,31 +158,52 @@
 
 <script>
 
+/* Send OTP */
 async function sendOTP(){
 
   const email = document.getElementById("email").value;
+  const btn = document.getElementById("sendOtpBtn");
 
   if(!email){
     alert("Enter email first");
     return;
   }
 
-  const res = await fetch("/send-otp",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({email})
-  });
+  // show spinner
+  btn.disabled = true;
+  btn.innerHTML = `
+    <span class="spinner-border spinner-border-sm"></span>
+    Sending...
+  `;
 
-  const data = await res.json();
+  try {
 
-  alert(data.message);
+    const res = await fetch("/send-otp",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({email})
+    });
 
+    const data = await res.json();
+
+    alert(data.message);
+
+  } catch(err){
+
+    alert("Failed to send OTP");
+
+  }
+
+  // restore button
+  btn.disabled = false;
+  btn.innerHTML = "Send OTP";
 }
 
 
-// Bootstrap validation
+
+/* Bootstrap Validation */
 (() => {
   'use strict'
 
@@ -186,6 +222,6 @@ async function sendOTP(){
     }, false)
   })
 
-})()
+})();
 
 </script>
