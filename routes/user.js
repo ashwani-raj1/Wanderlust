@@ -5,8 +5,8 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware.js");
 const userController = require("../controllers/users.js");
-const transporter = require("../config/mail.js");
-
+// const transporter = require("../config/mail.js");
+const sendOTP = require("../config/mail");
 
 // ===============================
 // GOOGLE AUTH
@@ -43,26 +43,21 @@ router.post("/send-otp", async (req, res) => {
       return res.status(400).json({ message: "Email required" });
     }
 
-    // Generate OTP
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
-    // Save OTP in session
     req.session.otp = otp;
     req.session.otpEmail = email;
     req.session.otpExpires = Date.now() + 5 * 60 * 1000;
 
-    // Send email
-    await transporter.sendMail({
-      to: email,
-      subject: "Wanderlust Email Verification",
-      text: `Your OTP is ${otp}. It will expire in 5 minutes.`
-    });
+    await sendOTP(email, otp);
 
     res.json({ message: "OTP sent successfully" });
 
   } catch (err) {
-    console.log(err);
+
+    console.error(err);
     res.status(500).json({ message: "Failed to send OTP" });
+
   }
 });
 
