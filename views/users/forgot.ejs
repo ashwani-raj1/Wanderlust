@@ -1,0 +1,153 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:75vh;">
+
+  <div class="card shadow-lg p-4" style="width:450px; border-radius:15px;">
+
+    <h3 class="text-center mb-4">Reset Your Password</h3>
+
+    <form action="/forgot-password" method="POST" class="needs-validation" novalidate>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+
+        <div class="input-group">
+
+          <span class="input-group-text">
+            <i class="fa-solid fa-envelope"></i>
+          </span>
+
+          <input 
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter your registered email"
+            required
+          >
+
+          <button
+            type="button"
+            id="sendOtpBtn"
+            class="btn btn-outline-primary"
+            onclick="sendOTP()">
+            Send OTP
+          </button>
+
+        </div>
+
+        <div class="invalid-feedback">
+          Please enter your email
+        </div>
+
+      </div>
+
+
+      <!-- OTP -->
+      <div class="mb-3">
+        <label class="form-label">Enter OTP</label>
+
+        <div class="input-group">
+
+          <span class="input-group-text">
+            <i class="fa-solid fa-shield-halved"></i>
+          </span>
+
+          <input
+            type="text"
+            class="form-control"
+            name="otp"
+            placeholder="Enter OTP"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- New Password -->
+      <div class="mb-3">
+        <label class="form-label">New Password</label>
+
+        <div class="input-group">
+
+          <span class="input-group-text">
+            <i class="fa-solid fa-lock"></i>
+          </span>
+
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Enter new password"
+            required
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- Reset Button -->
+      <button class="btn btn-success w-100 mb-3">
+        Reset Password
+      </button>
+
+
+      <p class="text-center">
+        Remember your password?
+        <a href="/login">Login</a>
+      </p>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+async function sendOTP(){
+
+  const email = document.getElementById("email").value;
+  const btn = document.getElementById("sendOtpBtn");
+
+  if(!email){
+    alert("Enter email first");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = `
+    <span class="spinner-border spinner-border-sm"></span>
+    Sending...
+  `;
+
+  try{
+
+    const res = await fetch("/send-otp",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({email})
+    });
+
+    const data = await res.json();
+    alert(data.message);
+
+  }catch(err){
+
+    alert("Failed to send OTP");
+
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = "Send OTP";
+
+}
+
+</script>

@@ -190,6 +190,74 @@ router.post("/signup", wrapAsync(userController.signup));
 
 router.get("/login", userController.renderLoginForm);
 
+router.get("/forgot-password", (req,res)=>{
+  res.render("users/forgot");
+});
+
+router.post("/forgot-password", async (req, res, next) => {
+
+  try {
+
+    const { email, otp, password } = req.body;
+
+    // Find user
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      req.flash("error", "No user with this email id");
+      return res.redirect("/forgot-password");
+    }
+
+    // OTP check
+    if (!otp) {
+      req.flash("error", "Enter OTP");
+      return res.redirect("/forgot-password");
+    }
+
+    if (req.session.otp !== otp) {
+      req.flash("error", "Invalid OTP");
+      return res.redirect("/forgot-password");
+    }
+
+    if (req.session.otpExpires < Date.now()) {
+      req.flash("error", "OTP expired");
+      return res.redirect("/forgot-password");
+    }
+
+    if (req.session.otpEmail !== email) {
+      req.flash("error", "Email mismatch");
+      return res.redirect("/forgot-password");
+    }
+
+    // Update password
+    await user.setPassword(password);
+    await user.save();
+
+    // clear OTP session
+    req.session.otp = null;
+    req.session.otpExpires = null;
+    req.session.otpEmail = null;
+
+    // auto login
+    req.login(user, (err) => {
+
+      if (err) return next(err);
+
+      req.flash("success", "Password updated successfully");
+      res.redirect("/listings");
+
+    });
+
+  } catch (err) {
+
+    console.log(err);
+    req.flash("error", "Password reset failed");
+    res.redirect("/forgot-password");
+
+  }
+
+});
+
 router.post(
   "/login",
   saveRedirectUrl,
