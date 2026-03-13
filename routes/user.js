@@ -121,12 +121,70 @@ router.post("/verify-otp", async (req, res) => {
 
 });
 
-
 // ===============================
 // NORMAL AUTH ROUTES
 // ===============================
 
 router.get("/signup", userController.renderSignupForm);
+
+// OTP + signup route (keep this one only)
+router.post("/signup", async (req, res) => {
+
+  try {
+
+    const { username, email, password, otp } = req.body;
+
+    if (!otp) {
+      req.flash("error", "Enter OTP");
+      return res.redirect("/signup");
+    }
+
+    if (req.session.otp !== otp) {
+      req.flash("error", "Invalid OTP");
+      return res.redirect("/signup");
+    }
+
+    if (req.session.otpExpires < Date.now()) {
+      req.flash("error", "OTP expired");
+      return res.redirect("/signup");
+    }
+
+    if (req.session.otpEmail !== email) {
+      req.flash("error", "Email mismatch");
+      return res.redirect("/signup");
+    }
+
+    const newUser = new User({
+      email,
+      username
+    });
+
+    const registeredUser = await User.register(newUser, password);
+
+    req.login(registeredUser, (err) => {
+
+      if (err) {
+        req.flash("error", "Login failed");
+        return res.redirect("/login");
+      }
+
+      req.flash("success", "Welcome to Wanderlust!");
+      res.redirect("/listings");
+
+    });
+
+    req.session.otp = null;
+    req.session.otpExpires = null;
+    req.session.otpEmail = null;
+
+  } catch (err) {
+
+    req.flash("error", err.message);
+    res.redirect("/signup");
+
+  }
+
+});
 
 router.post("/signup", wrapAsync(userController.signup));
 

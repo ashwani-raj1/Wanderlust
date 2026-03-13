@@ -28,8 +28,6 @@ async function sendOTP(email, otp) {
       `
     });
 
-    console.log("Email sent:", response);
-
     return response;
 
   } catch (error) {
