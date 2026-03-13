@@ -34,31 +34,44 @@ router.get(
 // SEND OTP
 // ===============================
 
+
 router.post("/send-otp", async (req, res) => {
+
   try {
 
     const { email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ message: "Email required" });
+      return res.status(400).json({
+        message: "Email required"
+      });
     }
 
+    // Generate OTP
     const otp = String(Math.floor(100000 + Math.random() * 900000));
 
+    // Save OTP in session
     req.session.otp = otp;
     req.session.otpEmail = email;
     req.session.otpExpires = Date.now() + 5 * 60 * 1000;
 
+    // Send email
     await sendOTP(email, otp);
 
-    res.json({ message: "OTP sent successfully" });
+    res.json({
+      message: "OTP sent successfully"
+    });
 
   } catch (err) {
 
-    console.error(err);
-    res.status(500).json({ message: "Failed to send OTP" });
+    console.error("OTP Error:", err);
+
+    res.status(500).json({
+      message: "Failed to send OTP"
+    });
 
   }
+
 });
 
 

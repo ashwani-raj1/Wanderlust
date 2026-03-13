@@ -1,24 +1,43 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // TLS
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASS // Gmail App Password
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendOTP(email, otp) {
-  const info = await transporter.sendMail({
-    from: `"Wanderlust" <${process.env.EMAIL}>`,
-    to: email,
-    subject: "Wanderlust OTP Verification",
-    html: `<h2>Your OTP is ${otp}</h2><p>This OTP expires in 5 minutes.</p>`
-  });
+  try {
 
-  console.log("Mail sent:", info.response);
+    const response = await resend.emails.send({
+      from: "Wanderlust <noreply@wanderlustonline.in>",
+      to: email,
+      subject: "Wanderlust OTP Verification",
+      html: `
+        <div style="font-family:Arial; text-align:center;">
+          <h2>Wanderlust Email Verification</h2>
+          <p>Your One Time Password is:</p>
+
+          <h1 style="
+            letter-spacing:6px;
+            background:#f2f2f2;
+            display:inline-block;
+            padding:10px 20px;
+            border-radius:6px;">
+            ${otp}
+          </h1>
+
+          <p>This OTP will expire in <b>5 minutes</b>.</p>
+        </div>
+      `
+    });
+
+    console.log("Email sent:", response);
+
+    return response;
+
+  } catch (error) {
+
+    console.error("Email error:", error);
+    throw error;
+
+  }
 }
 
 module.exports = sendOTP;
