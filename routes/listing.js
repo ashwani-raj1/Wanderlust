@@ -20,9 +20,6 @@ const validateListing = (req, res, next) => {
   }
   next();
 };
-
-
-
 /*  INDEX ROUTE  */
 router.get("/", wrapAsync(listingController.index));
 
@@ -42,7 +39,6 @@ router.get("/search", async (req, res) => {
 
         const { q, date, guests } = req.query;
 
-        // validation
         if(!q || q.trim() === ""){
             req.flash("error","Search location required");
             return res.redirect("/listings");
@@ -61,7 +57,13 @@ router.get("/search", async (req, res) => {
             ]
         });
 
-        res.render("listings/index",{ listings });
+        if(listings.length === 0){
+            req.flash("error","Looks like we are not there yet!");
+            return res.redirect("/listings");
+        }
+
+        // FIX HERE
+        res.render("listings/index",{ allListing: listings });
 
     } catch(err){
         console.error(err);
