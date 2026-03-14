@@ -37,26 +37,37 @@ router.post(
 );
 
 /* SEARCH ROUTE */
-router.get('/search', async (req,res) =>{
-  const { q } = req.query;
+router.get("/search", async (req, res) => {
+    try {
 
-  if(!q){
-      req.flash("error","Please enter your destination");
-      return res.redirect("/listings");
-  }
+        const { q, date, guests } = req.query;
 
-  const allListing = await Listing.find({
-    $or: [
-      { title: { $regex: q, $options: "i" } },
-      { location: { $regex: q, $options: "i" } },
-      { country: { $regex: q, $options: "i" } }
-    ]
-  });
-  if(allListing.length === 0){
-    req.flash("error","We will be there soon");
-    return res.redirect("/listings");
-  }
-  res.render("listings/index.ejs", { allListing });
+        // validation
+        if(!q || q.trim() === ""){
+            req.flash("error","Search location required");
+            return res.redirect("/listings");
+        }
+
+        if(guests && guests < 1){
+            req.flash("error","Guests must be at least 1");
+            return res.redirect("/listings");
+        }
+
+        const listings = await Listing.find({
+            $or: [
+                { title: { $regex: q, $options: "i" } },
+                { location: { $regex: q, $options: "i" } },
+                { country: { $regex: q, $options: "i" } }
+            ]
+        });
+
+        res.render("listings/index",{ listings });
+
+    } catch(err){
+        console.error(err);
+        req.flash("error","Something went wrong");
+        res.redirect("/listings");
+    }
 });
 
 /*  SHOW ROUTE  */
