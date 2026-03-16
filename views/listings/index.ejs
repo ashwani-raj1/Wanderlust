@@ -14,65 +14,75 @@
 
     <!-- Categories -->
     <div class="categories">
-
-      <div class="category active">
+      <a href="/listings" style="text-decoration: none;">
+      <div class="category">
         <i class="fa-solid fa-tractor"></i>
         <span>Farms</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-bed"></i>
         <span>Rooms</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-mountain-sun"></i>
         <span>Amazing views</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-city"></i>
         <span>Iconic cities</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-water"></i>
         <span>Surfing</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-person-swimming"></i>
         <span>Amazing pools</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-umbrella-beach"></i>
         <span>Beach</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-house"></i>
         <span>Cabins</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-face-surprise"></i>
         <span>OMG!</span>
       </div>
-
+      </a>
+      <a href="/listings" style="text-decoration: none;">
       <div class="category">
         <i class="fa-solid fa-water"></i>
         <span>Lakefront</span>
       </div>
+      </a>
 
     </div>
 
     <!-- Right Side Controls -->
     <div class="category-actions">
 
-      <button class="filter-btn">
+      <!-- <button class="filter-btn">
         <i class="fa-solid fa-sliders"></i> Filters
-      </button>
+      </button> -->
 
       <div class="tax-toggle">
         <input type="checkbox" id="taxSwitch">
@@ -98,7 +108,7 @@
         <div class="card-img-overlay"></div>
         <div class="card-body" >
         <h5><%= list.title %></h5>
-        <p>&#8377; <%= list.price.toLocaleString("en-IN") %> <i class="gst">+18% GST</i></p>
+        <p style="font: bold;">&#8377; <%= list.price.toLocaleString("en-IN") %> <i class="gst">+18% GST</i></p>
         <p><%= list.location %>,<%= list.country %></p>
         </div>
     </div>
