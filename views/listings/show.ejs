@@ -137,6 +137,24 @@ gtag('config', 'G-XFCQ9KRR80');
         </div>
       </div>
     </div>
+    <div>
+      <div>
+        <img >
+        Hosted by <%= listing.owner.username %>
+        <%
+        const createdDate = new Date(listing.owner.createdAt);
+        const now = new Date();
+        const months = 
+        (now.getFullYear() - createdDate.getFullYear()) * 12 +
+        (now.getMonth() - createdDate.getMonth());
+        %>
+        <% if(months < 1){ %>
+           <p>New Host</p>
+        <% } else {%>
+        <p><%= months %> months hosting</p>
+        <% } %>
+      </div>
+    </div>
     <%- include("../includes/footer.ejs") %>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

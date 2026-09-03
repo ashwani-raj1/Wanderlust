@@ -45,7 +45,11 @@
           name="password"
           id="password"
           placeholder="Enter password"
-          required>
+          required
+          >
+          <span class="input-group-text">
+            <i class="fa-solid fa-eye-slash" id="eyeIcon" onclick="togglePassword()"></i>
+          </span>
         </div>
 
         <div class="invalid-feedback">
@@ -114,5 +118,19 @@
   })
 
 })()
+
+function togglePassword(){
+    const pass = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+    if(pass.type === "password"){
+    pass.type = "text";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+    }else{
+    pass.type = "password";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+    }
+}
 
 </script>

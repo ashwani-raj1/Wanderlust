@@ -100,19 +100,23 @@
         <label class="form-label">Password</label>
 
         <div class="input-group">
-
-          <span class="input-group-text">
-            <i class="fa-solid fa-lock"></i>
-          </span>
+        <span class="input-group-text">
+          <i class="fa-solid fa-lock"></i>
+        </span>
 
           <input
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Create password"
-          value="<%= formData?.password || '' %>"
-          required>
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Create password"
+            value="<%= formData?.password || '' %>"
+            required
+          >
 
+          <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+            <i class="fa-solid fa-eye-slash" id="icon"></i>
+          </span>
         </div>
 
         <div class="invalid-feedback">
@@ -157,6 +161,23 @@
 
 
 <script>
+
+
+function togglePassword() {
+  const password = document.getElementById("password");
+  const icon = document.getElementById("icon");
+
+  if (password.type === "password") {
+    password.type = "text";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  } else {
+    password.type = "password";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  }
+}
+
 
 /* Send OTP */
 async function sendOTP(){
@@ -223,5 +244,7 @@ async function sendOTP(){
   })
 
 })();
+
+
 
 </script>

@@ -72,11 +72,13 @@ router.get("/search", async (req, res) => {
     }
 });
 
+/*  EDIT ROUTE  */
+router.get("/:id/edit", isLoggedIn, wrapAsync(listingController.editListing));
+
 /*  SHOW ROUTE  */
 router.get("/:id", wrapAsync(listingController.showListing));
 
-/*  EDIT ROUTE  */
-router.get("/:id/edit", isLoggedIn, wrapAsync(listingController.editListing));
+
 
 /*  UPDATE ROUTE  */
 router.put(

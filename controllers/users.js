@@ -4,28 +4,6 @@ module.exports.renderSignupForm = (req,res)=>{
     res.render("users/signup", { formData: {} });
 }
 
-// module.exports.signup = async (req, res, next) => {
-//   try {
-//     let { username, email, password } = req.body;
-//     const newUser = new User({ email, username });
-//     const registeredUser = await User.register(newUser, password);
-
-//     req.login(registeredUser, (err) => {
-//       if (err) return next(err);
-
-//       req.flash(
-//         "success",
-//         `Welcome ${username}, You have successfully registered`,
-//       );
-//       res.redirect("/listings");
-//     });
-//   } catch (err) {
-//     req.flash("error", err.message);
-//     res.redirect("/signup");
-//   }
-// };
-
-
 module.exports.signup = async (req, res, next) => {
 
   const { username, email, password, otp } = req.body;
