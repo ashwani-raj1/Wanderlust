@@ -95,13 +95,6 @@ app.get("/", (req, res) => {
     res.redirect("/listings");
 });
 
-app.get("/api/health", (req, res) => {
-    res.status(200).json({
-        status: "online",
-        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-    });
-});
-
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/listings", listingsRouter);
 app.use("/", userRouter);
