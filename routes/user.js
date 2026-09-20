@@ -162,11 +162,18 @@ router.post(
 
             // Reset verification attempts
             req.session.otpAttempts = 0;
+            console.log("OTP REQUEST", {
+                time: new Date().toISOString(),
+                ip: req.ip,
+                forwardedFor: req.headers["x-forwarded-for"],
+                email: email,
+                userAgent: req.headers["user-agent"]
+            });
 
             // -------------------------------
             // Send OTP
             // -------------------------------
-
+            
             await sendOTP(email, otp);
 
             return res.status(200).json({
